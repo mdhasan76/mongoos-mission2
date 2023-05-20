@@ -1,7 +1,7 @@
 
 
 export interface IUser {
-    id: string,
+    id?: string,
     name: string;
     age?: number;
     gender: "Male" | "Female";
