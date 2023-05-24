@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
-import { IUser } from "./user.interface";
+import { Model, Schema, model } from "mongoose";
+import { IUser, IUserMethods, UserModels } from "./user.interface";
 
-export const userSchema = new Schema<IUser>({
+export const userSchema = new Schema<IUser,UserModels , IUserMethods>({
     id: {
         type: String,
         unique: true,
@@ -21,5 +21,15 @@ export const userSchema = new Schema<IUser>({
         required: true
     }
 })
+userSchema.method("fullName", function fullName(){
+    return this.name+ " " + this.age
+})
 
-export const User = model<IUser>("user", userSchema);
+userSchema.static('getAbdur', async function getAbdur() {
+    const a_rahim = await this.find({name: "Islam Uddi"})
+    return a_rahim
+})
+
+export const User = model<IUser, UserModels>("user", userSchema);
+
+type UserModel = Model<IUser, {}, IUserMethods>;
